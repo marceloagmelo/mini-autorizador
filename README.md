@@ -1,20 +1,3 @@
-#Teste de programação - VR Benefícios
-
-Como parte do processo de seleção, gostaríamos que você desenvolvesse um pequeno sistema, para que possamos ver melhor o seu trabalho.
-
-Essa solução precisa ser desenvolvida usando Java, mas não necessariamente a versão mais recente. Use o Maven também. Dê preferência ao Spring Boot como framework principal.
-
-Fique à vontade para criar a partir dos requisitos abaixo. Se algo não ficou claro, pode assumir o que ficar mais claro para você, e, por favor, _documente suas suposições_ no README do projeto.
-
-Crie o projeto no seu Github para que possamos ver os passos realizados (por meio dos commits) para a implementação da solução.
-
-Caso sua solução seja aprovada, você será avisado, e a empresa lhe informará os próximos passos.
-
-Se quiser documentar outros detalhes da sua solução (como _design patterns_ e boas práticas utilizadas e outras decisões de projeto) pode mandar ver!
-Aliás, documente tudo o que você julgar necessário e interessante.
-
-Capriche também nos testes automatizados. Esperamos que a cobertura esteja alta. Mas, mais que isso: que os testes testem as classes de fato, e não apenas passem pelo código das classes que estão sendo testadas ;)
-
 # Mini autorizador
 
 A VR processa todos os dias diversas transações de Vale Refeição e Vale Alimentação, entre outras.
@@ -150,10 +133,17 @@ Caso alguma regra de autorização tenha barrado a mesma:
    Body: SALDO_INSUFICIENTE|SENHA_INVALIDA|CARTAO_INEXISTENTE (dependendo da regra que impediu a autorização)
 -----------------------------------------
 Erro de autenticação: 401
+
+```
+
+- A aplicação esta sem o **Basic Authenticate**. Para habilitar, favor adicionar as dependências abaixo no pom.xml
+  > group: org.springframework.boot
+  > artifactId: spring-boot-starter-security
+
 ```
 
 Desafios (não obrigatórios):
-
-- é possível construir a solução inteira sem utilizar nenhum if. Só não pode usar _break_ e _continue_! Conceitos de orientação a objetos ajudam bastante!
-- como garantir que 2 transações disparadas ao mesmo tempo não causem problemas relacionados à concorrência?
-  Exemplo: dado que um cartão possua R$10.00 de saldo. Se fizermos 2 transações de R$10.00 ao mesmo tempo, em instâncias diferentes da aplicação, como o sistema deverá se comportar?
+ * é possível construir a solução inteira sem utilizar nenhum if. Só não pode usar *break* e *continue*! Conceitos de orientação a objetos ajudam bastante!
+ * como garantir que 2 transações disparadas ao mesmo tempo não causem problemas relacionados à concorrência?
+Exemplo: dado que um cartão possua R$10.00 de saldo. Se fizermos 2 transações de R$10.00 ao mesmo tempo, em instâncias diferentes da aplicação, como o sistema deverá se comportar?
+```
