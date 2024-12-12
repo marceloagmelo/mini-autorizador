@@ -26,7 +26,7 @@ public class CartaoController {
     @PostMapping
     public ResponseEntity<?> criar(@RequestBody Cartao cartao) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(cartaoService.criarCartao(cartao));
+            return ResponseEntity.status(HttpStatus.CREATED).body(cartaoService.criarCartao(cartao));
         } catch (IOException ioe) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } catch (Exception e) {

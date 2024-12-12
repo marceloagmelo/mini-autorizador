@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.br.vr.miniautorizador.entity.Cartao;
+import com.br.vr.miniautorizador.exception.CartaoInexistenteException;
 import com.br.vr.miniautorizador.exception.SaldoInsuficientException;
+import com.br.vr.miniautorizador.exception.SenhaInvalidaException;
 import com.br.vr.miniautorizador.repository.CartaoRepository;
 import com.br.vr.miniautorizador.util.Validation;
 
@@ -37,16 +39,27 @@ public class CartaoService {
         return cartaoRepository.saveAndFlush(cartao);
     }
 
-    public Cartao efetuarTransacao(Cartao cartaoNovosDados) throws Exception, SaldoInsuficientException {
-        Cartao cartao = cartaoRepository.findByNumeroCartao(cartaoNovosDados.getNumeroCartao());
+    public Cartao efetuarTransacao(Cartao cartaoNovosDados)
+            throws Exception, CartaoInexistenteException, SaldoInsuficientException {
 
-        if (Validation.senhaCorreta(cartao, cartaoNovosDados.getSenha()) &&
-                Validation.possuiSaldo(cartao, cartaoNovosDados.getValor())) {
-            Float novoValor = (cartao.getValor() - cartaoNovosDados.getValor());
-            cartao.setValor(novoValor);
-            cartaoRepository.saveAndFlush(cartao);
+        Cartao cartao = null;
+        try {
+            cartao = cartaoRepository.findByNumeroCartao(cartaoNovosDados.getNumeroCartao());
+
+            if (Validation.autorizarTransacao(cartao, cartaoNovosDados.getSenha(), cartaoNovosDados.getValor())) {
+                Float novoValor = (cartao.getValor() - cartaoNovosDados.getValor());
+                cartao.setValor(novoValor);
+                cartaoRepository.saveAndFlush(cartao);
+            }
+
+        } catch (SenhaInvalidaException e) {
+            throw new SenhaInvalidaException();
+        } catch (SaldoInsuficientException e) {
+            throw new SaldoInsuficientException();
+        } catch (Exception e) {
+            throw new CartaoInexistenteException();
         }
 
-        return cartaoRepository.save(cartao);
+        return cartao;
     }
 }

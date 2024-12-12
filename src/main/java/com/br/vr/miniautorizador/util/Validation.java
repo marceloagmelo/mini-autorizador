@@ -20,4 +20,9 @@ public class Validation {
         return true;
     }
 
+    public static boolean autorizarTransacao(Cartao cartao, String senha, float valor)
+            throws SenhaInvalidaException, SaldoInsuficientException {
+        return (senhaCorreta(cartao, senha) && possuiSaldo(cartao, valor));
+    }
+
 }
