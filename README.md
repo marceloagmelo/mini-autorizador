@@ -48,6 +48,46 @@ Esses testes serão realizados:
 
 Para isso, é importante que os contratos abaixo sejam respeitados:
 
+## Criar usuário
+
+### Criar novo cartão
+
+```
+Method: POST
+URL: http://localhost:8080/api/user/register
+Body (json):
+{
+    "username": "username",
+    "password": "password"
+}
+## Contratos dos serviços
+
+### Criar novo cartão
+```
+
+Method: POST
+URL: http://localhost:8080/api/user/register
+Body (json):
+{
+"username": "username",
+"password": "password"
+}
+
+```
+
+## Contratos dos serviços
+
+### Criar novo cartão
+```
+
+Method: POST
+URL: http://localhost:8080/cartoes
+Body (json):
+{
+"numeroCartao": "6549873025634501",
+"senha": "1234"
+}
+
 ## Contratos dos serviços
 
 ### Criar novo cartão
@@ -136,14 +176,8 @@ Erro de autenticação: 401
 
 ```
 
-- A aplicação esta sem o **Basic Authenticate**. Para habilitar, favor adicionar as dependências abaixo no pom.xml
-  > group: org.springframework.boot
-  > artifactId: spring-boot-starter-security
-
-```
-
 Desafios (não obrigatórios):
- * é possível construir a solução inteira sem utilizar nenhum if. Só não pode usar *break* e *continue*! Conceitos de orientação a objetos ajudam bastante!
- * como garantir que 2 transações disparadas ao mesmo tempo não causem problemas relacionados à concorrência?
-Exemplo: dado que um cartão possua R$10.00 de saldo. Se fizermos 2 transações de R$10.00 ao mesmo tempo, em instâncias diferentes da aplicação, como o sistema deverá se comportar?
-```
+
+- é possível construir a solução inteira sem utilizar nenhum if. Só não pode usar _break_ e _continue_! Conceitos de orientação a objetos ajudam bastante!
+- como garantir que 2 transações disparadas ao mesmo tempo não causem problemas relacionados à concorrência?
+  Exemplo: dado que um cartão possua R$10.00 de saldo. Se fizermos 2 transações de R$10.00 ao mesmo tempo, em instâncias diferentes da aplicação, como o sistema deverá se comportar?
