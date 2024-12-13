@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import com.br.vr.miniautorizador.entity.Cartao;
 import com.br.vr.miniautorizador.entity.MensagemErro;
 import com.br.vr.miniautorizador.exception.SaldoInsuficientException;
 import com.br.vr.miniautorizador.exception.SenhaInvalidaException;
+import com.br.vr.miniautorizador.model.AuthenticatedUser;
 import com.br.vr.miniautorizador.service.CartaoService;
 
 @RestController
@@ -25,6 +27,8 @@ public class TransacaoController {
     @PostMapping
     public ResponseEntity<?> transacoes(@RequestBody Cartao cartao) throws IOException {
         try {
+            AuthenticatedUser user = (AuthenticatedUser) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
             return ResponseEntity.status(HttpStatus.OK).body(cartaoService.efetuarTransacao(cartao));
         } catch (SenhaInvalidaException esi) {
             MensagemErro erro = new MensagemErro("Senha invalida");
